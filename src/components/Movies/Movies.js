@@ -1,9 +1,18 @@
 // компонент страницы с поиском по фильмам
 import './Movies.css';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
+import SearchForm from '../SearchForm/SearchForm';
 
-const Movies = () => {
+function Movies({ isLogin }) {
   return (
-    <div>Movies</div>
+    <>
+      <main className='movies'>
+        <Header isLogin={ isLogin } />
+        <SearchForm />
+      </main>
+      <Footer />
+    </>
   )
 }
 

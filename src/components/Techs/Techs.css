@@ -1,0 +1,124 @@
+.techs {
+  font-family: Inter,Arial,sans-serif;
+  background-color: #F5F5F5;
+}
+
+.techs__wrapper {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 100px 70px;
+  box-sizing: border-box;
+}
+
+.techs__wrapper_text {
+  display: flex;
+  flex-direction: column;
+  margin: 90px auto 0;
+  text-align: center;
+  align-items: center;
+}
+
+.techs__title {
+  margin: 0;
+  font-size: 50px;
+  font-weight: 400;
+  line-height: 58px;
+  letter-spacing: -0.04em;
+  color: #000000;
+}
+
+.techs__description {
+  margin: 26px 0 100px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.04em;
+  color: #000000;
+  max-width: 460px;
+}
+
+.techs__list {
+  display: grid;
+  grid-gap: 10px;
+  height: 60px;
+  grid-template-columns: repeat(7, 90px);
+  margin: 0;
+  padding: 0;
+}
+
+.techs__item {
+  list-style-type: none;
+  background-color: #E8E8E8;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 16.94px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width: 900px) {
+  .techs__wrapper {
+    padding: 90px 50px;
+  }
+
+  .techs__wrapper_text {
+    margin: 80px auto 0;
+  }
+
+  .techs__description {
+    margin: 22px 0 83px;
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .techs__list {
+    height: 57px;
+    grid-template-columns: repeat(7, 84px);
+  }
+  
+  .techs__item {
+    font-size: 12px;
+    line-height: 14.52px;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .techs__list {
+    grid-template-columns: repeat(4, 84px);
+    height: 124px;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .techs {
+    background-color: #FFFFFF;
+  }
+
+  .techs__wrapper {
+    padding: 70px 18px;;
+  }
+
+  .techs__wrapper_text {
+    margin: 60px auto 0;
+    max-width: 292px;
+  }
+
+  .techs__title {
+    font-size: 30px;
+    line-height: 36.31px;
+  }
+
+  .techs__description {
+    margin: 24px 0 50px;
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .techs__list {
+    height: 258px;
+    grid-template-columns: repeat(2, 84px);
+  }
+}

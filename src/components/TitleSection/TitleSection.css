@@ -1,0 +1,20 @@
+.title {
+  width: 100%;
+  font-family: Inter,Arial,sans-serif;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 26.63px;
+  letter-spacing: -0.04em;
+  border-bottom: 1px solid #000000;
+  padding: 0 0 23px;
+  margin: 0 auto;
+  max-width: 1280px;
+}
+
+@media screen and (max-width: 540px) {
+  .title {
+    font-size: 18px;
+    line-height: 21.78px;
+    padding: 0 0 28px;
+  }
+}

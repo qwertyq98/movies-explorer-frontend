@@ -1,9 +1,12 @@
 // форма поиска, куда пользователь будет вводить запрос
 import './SearchForm.css';
+import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
-const SearchForm = () => {
+function SearchForm() {
   return (
-    <div>SearchForm</div>
+    <div>
+      <FilterCheckbox />
+    </div>
   )
 }
 

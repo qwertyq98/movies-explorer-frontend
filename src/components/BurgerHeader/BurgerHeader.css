@@ -1,0 +1,115 @@
+.burger {
+  display: none;
+}
+
+.burger_active {
+  background-color: rgba(0,0,0,.3);
+  align-items: center;
+  bottom: 0;
+  color: #000;
+  display: flex;
+  font-family: Inter,Arial,sans-serif;
+  justify-content: right;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  transition: visibility .3s linear,opacity .3s linear;
+  opacity: 1;
+  visibility: visible;
+}
+
+.burger__wrapper {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  right: 0;
+  width: 520px;
+  height: 100vh;
+  background: #FFFFFF;
+  align-items: center;
+  transform: translateX(100%);
+  animation: ani .5s forwards;
+}
+
+@keyframes ani {
+  0% {transform: translateX(100%);}
+  100% {transform: translateY(0);}
+}
+
+.burger__navigation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 159px;
+  font-family: Inter,Arial,sans-serif;
+}
+
+.burger__close-button {
+  background: url('../../images/close_button.svg') no-repeat center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: none;
+  margin: 22.44px 22.44px 0 0;
+  position: absolute;
+  top: 0;
+  cursor: pointer;
+  right: 0;
+}
+
+.burger__link {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 21.78px;
+  text-decoration: none;
+  color: black;
+  margin-bottom: 28px;
+  cursor: pointer;
+  transition: opacity .2s linear;
+}
+
+.burger__link:hover {
+  opacity: 0.7;
+}
+
+.burger__link_line {
+  padding-bottom: 4px;
+  border-bottom: solid black 2px;
+  transition: opacity .2s linear;
+}
+
+.burger__link_line:hover {
+  opacity: 0.7;
+}
+
+@media screen and (min-width: 720px) {
+  .burger_active {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .burger_active {
+    width: 100%;
+  }
+
+  .burger__link {
+    margin-bottom: 24px;
+  }
+
+  .burger__link_line {
+    padding-bottom: 7px;
+    border-bottom: solid black 2px;
+  }
+
+  .burger__navigation {
+    margin-top: 144px;
+  }
+
+  .burger__close-button {
+
+    margin: 13.44px 13.44px 0 0;
+  }
+}

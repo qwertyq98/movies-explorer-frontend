@@ -1,0 +1,29 @@
+.navigation {
+  display: flex;
+  font-family: Inter,Arial,sans-serif;
+}
+
+.navigation__films {
+  color: #000000;
+  font-size: 13px;
+  line-height: 18px;
+  margin-right: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: opacity .2s linear;
+}
+
+.navigation__films:hover {
+  opacity: 0.7;
+}
+
+.navigation__films_saved {
+  margin-right: 0;
+  font-weight: 400;
+}
+
+@media screen and (max-width: 720px) {
+  .navigation {
+    display: none;
+  }
+}
