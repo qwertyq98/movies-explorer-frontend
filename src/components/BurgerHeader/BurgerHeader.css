@@ -17,6 +17,7 @@
   transition: visibility .3s linear,opacity .3s linear;
   opacity: 1;
   visibility: visible;
+  z-index: 1000;
 }
 
 .burger__wrapper {

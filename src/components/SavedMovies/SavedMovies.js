@@ -1,9 +1,20 @@
 // компонент страницы с сохранёнными карточками фильмов
 import './SavedMovies.css';
+import Header from '../Header/Header';
+import SearchForm from '../SearchForm/SearchForm';
+import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import Footer from '../Footer/Footer';
 
-const SavedMovies = () => {
+function SavedMovies({ isLogin, movies, isLiked, onMovieLike, onMovieDelete }) {
   return (
-    <div>SavedMovies</div>
+    <>
+      <main className='movies'>
+        <Header isLogin={ isLogin } />
+        <SearchForm />
+        <MoviesCardList movies={movies} isLiked={isLiked} onMovieLike={onMovieLike} onMovieDelete={onMovieDelete} />
+      </main>
+      <Footer />
+    </>
   )
 }
 

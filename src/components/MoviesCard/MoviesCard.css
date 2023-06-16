@@ -1,0 +1,141 @@
+.movies__item {
+  list-style-type: none;
+  padding: 0;
+  font-size: 0;
+}
+
+.movies__img {
+  max-width: 270px;
+  max-height: 151px;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.movies__text-wrapper {
+  display: flex;
+  padding: 10px 0 0;
+  flex-direction: row;
+  text-align: left;
+  justify-content: space-between;
+  height: 49px;
+}
+
+.movies__title {
+  font-size: 13px;
+  line-height: 15.73px;
+  font-weight: 500;
+  max-width: 226px;
+  width: 100%;
+  margin: 0;
+  padding: 4px 0 0;
+  min-height: 32px;
+  height: 100%;
+  color: #000000;
+}
+
+.movies__like-button {
+  background: url('../../images/icon__COLOR_invisible.svg') no-repeat center;
+  width: 24px;
+  height: 24px;
+  padding: 8px 7px 7.5px;
+  background-color: #F9F9F9;
+  border-radius: 36px;
+  border: none;
+  cursor: pointer;
+  transition: opacity .2s linear;
+  display: flex;
+}
+
+.movies__like-button:hover {
+  opacity: 0.7;
+}
+
+.movies__like-button_active {
+  background: url('../../images/icon__COLOR_main-3.svg') no-repeat center;
+  width: 24px;
+  height: 24px;
+  padding: 8px 7px 7.5px;
+  background-color: #F9F9F9;
+  border-radius: 36px;
+  border: none;
+  cursor: pointer;
+  transition: opacity .2s linear;
+}
+
+.movies__duration {
+  font-size: 11px;
+  line-height: 13.31px;
+  font-weight: 400;
+  padding: 6px 0 0;
+  border-top: solid 1px #E8E8E8;
+  color: #A0A0A0;
+  text-align: left;
+  margin: 0;
+}
+
+.movies__delete-button {
+  background: url('../../images/delete.svg') no-repeat center;
+  width: 24px;
+  height: 24px;
+  padding: 5.64px;
+  background-color: #F9F9F9;
+  border-radius: 36px;
+  border: none;
+  cursor: pointer;
+  transition: opacity .2s linear;
+}
+
+.movies__delete-button:hover {
+  opacity: 0.7;
+}
+
+@media screen and (max-width: 900px) {
+  .movies__img {
+    max-width: 339px;
+    max-height: 190px;
+  }
+
+  .movies__title {
+    padding: 5px 0 0;
+  }
+
+  .movies__text-wrapper {
+    height: 50px;
+  }
+  
+  .movies__title {
+    max-width: 295px;
+    min-height: 16px;
+  }
+  
+  .movies__duration {
+    padding: 5px 0 0;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .movies__img {
+    max-width: 300px;
+    max-height: 168px;
+  }
+  
+  .movies__text-wrapper {
+    padding: 10px 0 0;
+    height: 49px;
+  }
+  
+  .movies__title {
+    font-size: 12px;
+    line-height: 14.52px;
+    max-width: 260px;
+    min-height: 15px;
+  }
+  
+  .movies__duration {
+    font-size: 10px;
+    line-height: 12.1px;
+    padding: 6px 0 0;
+  }
+}

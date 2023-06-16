@@ -1,6 +1,7 @@
 .navigation {
   display: flex;
   font-family: Inter,Arial,sans-serif;
+  padding-left: 60px;
 }
 
 .navigation__films {

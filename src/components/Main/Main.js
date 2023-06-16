@@ -6,11 +6,11 @@ import AboutProject from '../AboutProject/AboutProject';
 import Techs from '../Techs/Techs';
 import AboutMe from '../AboutMe/AboutMe';
 
-const Main = () => {
+function Main({ handleScroll, showMoreRef }) {
   return (
     <main className="main">
-      <Promo />
-      <AboutProject />
+      <Promo handleScroll={handleScroll} showMoreRef={showMoreRef} />
+      <AboutProject showMoreRef={showMoreRef} />
       <Techs />
       <AboutMe />
     </main>

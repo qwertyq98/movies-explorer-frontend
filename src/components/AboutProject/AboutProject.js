@@ -2,9 +2,9 @@
 import './AboutProject.css';
 import TitleSection from '../TitleSection/TitleSection';
 
-function AboutProject() {
+function AboutProject({showMoreRef}) {
   return (
-    <section className='about-project' id='about_project'>
+    <section className='about-project' id='about_project' ref={showMoreRef}>
       <TitleSection title={ 'О проекте' }/>
       <div className='about-project__text-wrapper'>
         <div className='about-project__column'>

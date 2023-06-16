@@ -3,12 +3,28 @@ import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import Movies from '../Movies/Movies';
+import SavedMovies  from '../SavedMovies/SavedMovies';
 import './App.css';
-import React, { useEffect, useState, useLayoutEffect } from 'react'; 
+import React, { useRef, useEffect, useState, useLayoutEffect } from 'react'; 
 import { Route, Routes } from 'react-router-dom';
+import moviesConst from '../../temporary-data/movies-constants';
 
 function App() {
   const [isLogin, setIsLogin] = React.useState(false);
+  const [isLiked, setIsLiked] = React.useState(false);
+  const [movies, setMovies] = React.useState(moviesConst);
+  const showMoreRef = React.useRef(null);
+
+  function handleScroll(ref) {
+    ref.current.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }
+
+  function handleMovieLike() {
+    setIsLiked(!isLiked);
+  }
   
   return (
     <div className="page">
@@ -16,11 +32,21 @@ function App() {
         <Route path="/" element={
           <>
             <Header isLogin={false} />
-            <Main />
+            <Main handleScroll={handleScroll} showMoreRef={showMoreRef} />
             <Footer />
           </>
         } />
-        <Route path='/movies' element={<Movies isLogin={true}/>} />
+        <Route path='/movies' element={<Movies 
+          isLogin={true} 
+          movies={movies} 
+          isLiked={isLiked} 
+          onMovieLike={handleMovieLike}
+        />} />
+        <Route path='/saved-movies' element={<SavedMovies 
+          isLogin={true} 
+          movies={movies} 
+        />} />
+        <Route path='/profile' />
       </Routes>
     </div>
   )
