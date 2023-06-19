@@ -50,14 +50,15 @@
 
 .header__burger {
   background: url('../../images/icon__burger.svg') no-repeat center;
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 43px;
   position: absolute;
   top: 15px;
   right: 30px;
   border: none;
   padding: 0;
   cursor: pointer;
+  background-size: contain;
 }
 
 @media screen and (max-width: 900px) {

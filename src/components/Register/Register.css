@@ -1,0 +1,44 @@
+.signup {
+  font-family: Inter,Arial,sans-serif;
+  background-color: #FFFFFF;
+  max-width: 1280px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 70px 0;
+}
+
+.signup__wrapper {
+  display: grid;
+  grid-template-columns: minmax(396px, auto);
+  grid-template-rows: 38px 29px auto;
+  text-align: left;
+  width: 100%;
+  gap: 40px;
+  height: calc(100vh - 140px);
+}
+
+@media screen and (max-width: 900px) {
+  .signup {
+    align-items: center;
+    padding: 232px 30px;
+  }
+  
+  .signup__wrapper {
+    height: calc(100vh - 464px);
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .signup {
+    padding: 56px 30px 30px;
+  }
+  
+  .signup__wrapper {
+    justify-items: center;
+    grid-template-columns: minmax(260px, auto);
+    gap: 50px;
+    height: calc(100vh - 86px);
+  }
+}

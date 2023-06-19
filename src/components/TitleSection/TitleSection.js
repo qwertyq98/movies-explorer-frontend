@@ -1,4 +1,4 @@
-// компонент, который заголовков 
+// компонент для заголовков 
 import './TitleSection.css';
 
 function TitleSection({ title }) {
