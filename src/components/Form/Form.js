@@ -26,7 +26,7 @@ function Form({ user, type, name, onSubmit, buttonName, paragrafText, linkText, 
         </label>
         <label className={`form__label form__label_${name}`}>Пароль
           <input 
-            className={`form__text form__text_${name}`} 
+            className={`form__text form__text_${name} form__text_${name}_red`} 
             type="password" 
             name='password' 
             defaultValue={user.password} 

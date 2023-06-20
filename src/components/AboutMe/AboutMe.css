@@ -109,7 +109,7 @@
   }
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 770px) {
   .about-me__wrapper_text {
     max-width: 360px;
     margin-right: 20px;

@@ -50,8 +50,8 @@
 
 .header__burger {
   background: url('../../images/icon__burger.svg') no-repeat center;
-  width: 40px;
-  height: 43px;
+  width: 44px;
+  height: 44px;
   position: absolute;
   top: 15px;
   right: 30px;
@@ -68,7 +68,7 @@
   }
 }
 
-@media screen and (min-width: 720px) {
+@media screen and (min-width: 770px) {
   .header__burger {
    display: none;
   }
@@ -94,5 +94,7 @@
   .header__burger {
     top: 15px;
     right: 14px;
+    width: 40px;
+    height: 43px;
   }
 }

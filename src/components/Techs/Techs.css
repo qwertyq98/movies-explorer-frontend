@@ -85,7 +85,7 @@
   }
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 770px) {
   .techs__list {
     grid-template-columns: repeat(4, 84px);
     height: 124px;

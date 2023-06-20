@@ -82,6 +82,10 @@
   color: #000000;
 }
 
+.form__text_login_red {
+  color: #EE3465;
+}
+
 .form__text_signup {
   background-color: #F9F9F9;
   padding: 15px;
@@ -89,6 +93,10 @@
   font-size: 13px;
   line-height: 15.73px;
   color: #000000;
+}
+
+.form__text_signup_red {
+  color: #EE3465;
 }
 
 .form__button {
@@ -234,11 +242,6 @@
 
   .form__name_signup {
     margin-top: 30px;
-  }
-  
-  .form__name_profile {
-    padding: 123px 0 0;
-    height: calc(100vh - 247px);
   }
   
   .form__label {

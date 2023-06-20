@@ -74,6 +74,10 @@
   opacity: 0.7;
 }
 
+.burger__link:nth-child(2) {
+  margin-bottom: 22px;
+}
+
 .burger__link_line {
   padding-bottom: 4px;
   border-bottom: solid black 2px;
@@ -84,7 +88,7 @@
   opacity: 0.7;
 }
 
-@media screen and (min-width: 720px) {
+@media screen and (min-width: 770px) {
   .burger_active {
     opacity: 0;
     visibility: hidden;
@@ -109,8 +113,11 @@
     margin-top: 144px;
   }
 
-  .burger__close-button {
+  .burger__link:nth-child(2) {
+    margin-bottom: 15px;
+  }
 
-    margin: 13.44px 13.44px 0 0;
+  .burger__close-button {
+    margin: 18px 18px 0 0;
   }
 }
