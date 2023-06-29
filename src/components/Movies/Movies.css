@@ -3,4 +3,55 @@
   padding: 0;
   flex: 1;
   max-width: 100%;
+  font-family: Inter,Arial,sans-serif;
+  background-color: #FFFFFF;
+}
+
+.movies__noResalts {
+  max-width: 1280px;
+  box-sizing: border-box;
+  padding: 0 70px;
+  text-align: center;
+  margin: 80px auto;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+  color: #EE3465;
+}
+
+.movies__server-error {
+  max-width: 1280px;
+  box-sizing: border-box;
+  padding: 0 70px;
+  text-align: center;
+  margin: 80px auto;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  color: #EE3465;
+  max-width: 700px;
+  width: 100%;
+}
+
+@media screen and (max-width: 900px) {
+  .movies__noResalts {
+    padding: 0 30px;
+    max-width: 500px;
+  }
+
+  .movies__server-error {
+    padding: 0 30px;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .movies__noResalts {
+    font-size: 11px;
+    padding: 0 14px;
+  }
+
+  .movies__server-error {
+    font-size: 11px;
+    padding: 0 14px;
+  }
 }

@@ -20,6 +20,16 @@
   position: relative;
 }
 
+.search-form__error {
+  color: #EE3465;
+  font-size: 10px;
+  line-height: 12px;
+  font-weight: 400;
+  position: absolute;
+  top: 56px;
+  left: 22px;
+}
+
 .search-form__input {
   min-width: 100%;
   height: 46px;

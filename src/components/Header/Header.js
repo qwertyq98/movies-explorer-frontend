@@ -7,12 +7,7 @@ import Account from '../Account/Account';
 import BurgerHeader from '../BurgerHeader/BurgerHeader';
 import React from 'react'; 
 
-function Header({ isLogin }) {
-  const [isBurgerMenu, setIsBurgerMenu] = React.useState(false);
-
-  const handleToggleBurger = () => {
-    setIsBurgerMenu(!isBurgerMenu);
-  };
+function Header({ isLogin, handleBurger, burger }) {
 
   return (
     <>
@@ -21,9 +16,9 @@ function Header({ isLogin }) {
           <div className='header__wrapper'>
             <Logo />
             <Navigation />
-            {isBurgerMenu ? null : <Account isBurgerMenu={isBurgerMenu} />}
-            <button className='header__burger'onClick={handleToggleBurger} />
-            <BurgerHeader isBurgerMenu={isBurgerMenu} handleToggleBurger={handleToggleBurger} />
+            {!burger ? <Account burger={burger} handleBurger={handleBurger} /> : <></>}
+            <button className='header__burger' onClick={handleBurger} />
+            <BurgerHeader burger={burger} handleBurger={handleBurger} />
           </div>
         </header> : 
 

@@ -3,7 +3,7 @@ import './Profile.css';
 import Form from '../Form/Form';
 import TitleForm from '../TitleForm/TitleForm';
 
-function Profile({ user }) {
+function Profile({userData}) {
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -12,9 +12,8 @@ function Profile({ user }) {
   return (
     <main className='profile'>
       <section className='profile__wrapper'>
-        <TitleForm title={`Привет, ${user.name}!`} />
+        <TitleForm title={`Привет, ${'aaaaaa'}!`} />
         <Form 
-          user={user} 
           type='profile'
           name='profile'
           onSubmit={handleSubmit}
@@ -22,6 +21,7 @@ function Profile({ user }) {
           paragrafText=''
           linkText='Выйти из аккаунта'
           route="/signin"
+          userData={userData}
         />
       </section>
     </main>

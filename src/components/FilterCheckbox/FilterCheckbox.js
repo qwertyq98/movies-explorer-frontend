@@ -1,11 +1,11 @@
 // 
 import './FilterCheckbox.css';
 
-function FilterCheckbox() {
+function FilterCheckbox({onChangeFilter, isFilter}) {
   return (
     <label className="filter-checkbox">
       Короткометражки
-      <input type="checkbox" className='filter-checkbox__input' name="toggle" id="toggle" />
+      <input type="checkbox" className='filter-checkbox__input' name="toggle" id="toggle" checked={isFilter} onChange={onChangeFilter} />
       <span className="filter-checkbox__display"></span>
     </label>
   )
