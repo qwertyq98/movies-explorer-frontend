@@ -16,20 +16,6 @@
 //     setErrors({...errors, [e.target.name]: e.target.validationMessage});
 //   }
 
-//   function validateForm(form) {
-//     let newValues = {};
-//     let newErrors = {};
-
-//     for (const input of form.getElementsByTagName('input')) {
-//       // _validateInput(input);
-//       newValues[input.name] = input.value;
-//       newErrors[input.name] = input.validationMessage;
-//     };
-
-//     setValues({...values, ...newValues});
-//     setErrors({...errors, ...newErrors});
-//   }
-
 //   function _validateInput(input) {
 //     if (input.validity.valueMissing && input.getAttribute('emptytextvalidation')) {
 //       input.setCustomValidity(input.getAttribute('emptytextvalidation'));
@@ -59,12 +45,7 @@ export function useValidationForm() {
     const name = target.name;
     const value = target.value;
 
-    if (target.validity.valueMissing && target.getAttribute('emptytextvalidation')) {
-      target.setCustomValidity(target.getAttribute('emptytextvalidation'));
-    } else {
-      target.setCustomValidity('');
-    }
-    
+    _validateInput(target);
     setValues({...values, [name]: value});
     setErrors({...errors, [name]: target.validationMessage });
     setValid(target.closest("form").checkValidity());
@@ -79,5 +60,25 @@ export function useValidationForm() {
     [setValues, setErrors, setValid]
   );
 
-  return { values, onChangeHandler, errors, valid, resetForm, setErrors };
+  const onSubmitHandler = (event) => {
+    for (const input of event.target.getElementsByTagName('input')) {
+      _validateInput(input);
+      values[input.name] = input.value;
+      errors[input.name] = input.validationMessage;
+    };
+
+    setValues({...values});
+    setErrors({...errors});
+    setValid(event.target.checkValidity());
+  }
+
+  function _validateInput(input) {
+    if (input.validity.valueMissing && input.getAttribute('emptytextvalidation')) {
+      input.setCustomValidity(input.getAttribute('emptytextvalidation'));
+    } else {
+      input.setCustomValidity('');
+    }
+  }
+
+  return { values, onChangeHandler, errors, valid, resetForm, onSubmitHandler };
 }

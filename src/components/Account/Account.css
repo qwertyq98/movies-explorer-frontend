@@ -5,6 +5,7 @@
   line-height: 16px;
   font-family: Inter,Arial,sans-serif;
   transition: opacity .2s linear;
+  color: #000000;
 }
 
 .account__button:hover {
@@ -19,7 +20,10 @@
 .account__button_name {
   font-size: 14px;
   line-height: 16px;
-  color: #000000;
+}
+
+.account__button_white {
+  color: #FFFFFF;
 }
 
 .account_burger {

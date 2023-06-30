@@ -5,7 +5,7 @@ import TitleForm from '../TitleForm/TitleForm';
 import Logo from '../Logo/Logo';
 
 function Register({onSubmit, serverError}) {
-
+  
   return (
     <main className='signup'>
       <section className='signup__wrapper'>

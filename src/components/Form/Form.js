@@ -1,16 +1,46 @@
 // компонент страницы изменения профиля
 import './Form.css';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useValidationForm } from '../../hooks/useValidationForm';
 
-function Form({ type, name, onSubmit, buttonName, paragrafText, linkText, route, serverError, userData }) {
-  const { values, errors, valid, onChangeHandler } = useValidationForm();
+function Form({ 
+  type, 
+  name, 
+  onSubmit, 
+  buttonName, 
+  paragrafText, 
+  linkText, 
+  route, 
+  serverError, 
+  currentUser, 
+  buttonEdit, 
+  isEdit, 
+  handleEdit, 
+  readOnly,
+  signOut
+  }) {
+  const { values, errors, valid, onChangeHandler, onSubmitHandler } = useValidationForm();
   const formRef = React.useRef('');
+  const [disabled, setDisabled] = React.useState(true);
   const location = useLocation();
+
+  useEffect(() => {
+    if(location.pathname === '/profile') {
+      const profileIsChanged = (
+        (values.email !== undefined && values.email !== currentUser.email) ||
+        (values.text !== undefined && values.text !== currentUser.name)
+      )
+
+      setDisabled(!valid || !profileIsChanged);
+    } else {
+      setDisabled(!valid);
+    }
+  }, [values, valid]);
 
   function handleSubmit(e) {
     e.preventDefault();
+    onSubmitHandler(e);
     onSubmit(values);
   }
 
@@ -23,9 +53,10 @@ function Form({ type, name, onSubmit, buttonName, paragrafText, linkText, route,
               className={`form__text form__text_${name}`} 
               type="text" 
               name='text' 
-              value={values.text || '' || userData?.text}
+              defaultValue={values.text || '' || currentUser?.name}
               onChange={onChangeHandler}
               pattern='^[A-Za-zА-Яа-яЁё\s\-]+$'
+              readOnly={readOnly}
               required 
             />
             <span className={`form__error form__error_${name}`}>{errors.text}</span>
@@ -36,8 +67,9 @@ function Form({ type, name, onSubmit, buttonName, paragrafText, linkText, route,
             className={`form__text form__text_${name}`} 
             type="email" 
             name='email' 
-            value={values.email || '' || userData?.email}
+            defaultValue={values.email || '' || currentUser?.email}
             onChange={onChangeHandler}
+            readOnly={readOnly}
             required 
           />
           <span className={`form__error form__error_${name}`}>{errors.email}</span>
@@ -48,7 +80,7 @@ function Form({ type, name, onSubmit, buttonName, paragrafText, linkText, route,
               className={`form__text form__text_${name} form__text_${name}_red`} 
               type="password" 
               name='password' 
-              value={values.password || ''}
+              defaultValue={values.password || ''}
               onChange={onChangeHandler}
               autoComplete="on"
               required 
@@ -59,17 +91,27 @@ function Form({ type, name, onSubmit, buttonName, paragrafText, linkText, route,
       </div>
       <div className='form__buttons-wrapper'>
         <span className='form__server-error'>{serverError}</span>
-        <button 
-          className={valid ? 
-          `form__button form__button_${name}` : 
-          `form__button form__button_${name} form__button_disable`} 
-          type="submit" 
-          disabled={!valid}
-        >{buttonName}</button>
-        <div className='form__wrapper'>
+        {location.pathname === '/profile' && isEdit ? 
+          <>
+            <button className='form__edit' onClick={handleEdit}>{buttonEdit}</button>
+          </> : <></>
+        }
+        {!isEdit ? 
+          <button 
+            className={!disabled ? 
+            `form__button form__button_${name}` : 
+            `form__button form__button_${name} form__button_disable`} 
+            type="submit" 
+            disabled={disabled}
+          >{buttonName}</button> :
+          <></>
+        } 
+        {<div className='form__wrapper'>
           <p className={`form__wrapper-text form__wrapper-text_${name}`}>{paragrafText}</p>
-          <Link to={route} className={`form__link form__link_${name}`}>{linkText}</Link>
-        </div>
+          {(!isEdit  && location.pathname !== '/profile') || (isEdit && location.pathname === '/profile') ? 
+            <Link to={route} className={`form__link form__link_${name}`} onClick={signOut}>{linkText}</Link> : <></>
+          }
+        </div>}
       </div>
     </form>
   )

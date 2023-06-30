@@ -3,7 +3,7 @@ import React, {useLayoutEffect} from 'react';
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
-function MoviesCardList({ movies, isLiked, onMovieLike, onClickButton, numberVisibleMovies }) {
+function MoviesCardList({ movies, isLiked, onClickButton, numberVisibleMovies, handleCardLike }) {
   const [visibalMovies, setVisibalMovies] = React.useState([]);
 
   useLayoutEffect(() => {
@@ -21,10 +21,9 @@ function MoviesCardList({ movies, isLiked, onMovieLike, onClickButton, numberVis
             nameRU={movie.nameRU}
             duration={`${Math.trunc(movie.duration / 60)}ч ${movie.duration % 60}м`}
             image={`https://api.nomoreparties.co/${movie.image.url}`}
-            movie={movie}
-            isLiked={isLiked}
-            onMovieLike={onMovieLike}
             trailerLink={movie.trailerLink}
+            handleCardLike={() => handleCardLike(movie)}
+            like={movie.like}
           />
         ))}
       </ul>

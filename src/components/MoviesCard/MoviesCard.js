@@ -2,12 +2,12 @@
 import './MoviesCard.css';
 import { useLocation } from "react-router-dom";
 
-function MoviesCard({ movie, isLiked, onMovieLike, nameRU, duration, image, trailerLink }) {
+function MoviesCard({ like, nameRU, duration, image, trailerLink, handleCardLike }) {
   const location = useLocation();
 
   return (
     <>
-      {location.pathname === "/saved-movies" && !movie.like ? 
+      {location.pathname === "/saved-movies" && !like ? 
         <></> :
         <li className='movies__item'>
           <a className='movies__trailer-link' href={trailerLink} rel="noreferrer" target="_blank">
@@ -16,10 +16,11 @@ function MoviesCard({ movie, isLiked, onMovieLike, nameRU, duration, image, trai
           <div className='movies__text-wrapper'>
             <h3 className='movies__title'>{nameRU}</h3>
             { location.pathname === "/movies" ? 
-              <button onClick={onMovieLike} className={
-                movie.like || isLiked ? 
+              <button onClick={handleCardLike} className={
+                like ? 
                 'movies__like-button movies__like-button_active': 'movies__like-button'
-              } type='button' /> :
+              } type='button'
+              /> :
               <button className='movies__delete-button' type='button' />
             }
           </div>

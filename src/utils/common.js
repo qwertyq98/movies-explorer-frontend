@@ -13,5 +13,5 @@ function getMovies() {
 }
 
 export {
-  getMovies
+  getMovies,
 }

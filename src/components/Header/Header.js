@@ -6,13 +6,14 @@ import Navigation from '../Navigation/Navigation';
 import Account from '../Account/Account';
 import BurgerHeader from '../BurgerHeader/BurgerHeader';
 import React from 'react'; 
+import { useLocation } from 'react-router-dom';
 
 function Header({ isLogin, handleBurger, burger }) {
-
+  const location = useLocation();
   return (
     <>
       {isLogin ? 
-        <header className ='header'>
+        <header className ={location.pathname === '/' ? 'header header_gray': 'header'}>
           <div className='header__wrapper'>
             <Logo />
             <Navigation />
@@ -21,7 +22,6 @@ function Header({ isLogin, handleBurger, burger }) {
             <BurgerHeader burger={burger} handleBurger={handleBurger} />
           </div>
         </header> : 
-
         <header className ='header header_gray'>
           <div className='header__wrapper'>
             <Logo />

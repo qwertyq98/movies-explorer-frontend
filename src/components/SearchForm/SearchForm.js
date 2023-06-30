@@ -8,20 +8,15 @@ function SearchForm({ onChangeFilter, initialShortFilms, initialSearchString }) 
   const [searchString, setSearchString] = React.useState(initialSearchString);
   const [isFilter, setIsFilter] = React.useState(initialShortFilms);
 
-  const {onChangeHandler, errors, setErrors} = useValidationForm();
+  const {valid, onChangeHandler, errors, onSubmitHandler} = useValidationForm();
 
   function handleSubmit(e) {
     const form = e.target;
     const searchInput = form.elements.search;
     const newSearchString = searchInput.value;
-    let errorValue = '';
-
-    if (newSearchString === '') {
-      errorValue = searchInput.getAttribute('emptytextvalidation');
-    }
 
     e.preventDefault();
-    setErrors({...errors, [searchInput.name]: errorValue})
+    onSubmitHandler(e);
     setSearchString(newSearchString);
   }
 
@@ -30,13 +25,13 @@ function SearchForm({ onChangeFilter, initialShortFilms, initialSearchString }) 
   }
 
   useEffect(() => {
-    if (searchString !== '') {
+    if (valid) {
       onChangeFilter({
         searchString: searchString,
         shortFilms: isFilter,
       });
     }
-  }, [searchString, isFilter]);
+  }, [searchString, isFilter, valid]);
  
   return (
       <section className='search-form'>

@@ -7,14 +7,31 @@ import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
 import { getMovies } from '../../utils/common';
+import mainApi from '../../utils/MainApi';
 
-function Movies({ isLogin, isLiked, onMovieLike, handleBurger, burger }) {
+function Movies({ isLogin, handleBurger, burger, handleCardLike }) {
   const [loading, setLoading] = React.useState(false);
   const [movies, setMovies] = React.useState([]);
   const [serverError, setServerError] = React.useState(false);
   const [initialQuantity, setInitialQuantity] = React.useState(0);
   const [additionalQuantity, setAdditionalQuantity] = React.useState(0);
   const [numberVisibleMovies, setNumberVisibleMovies] = React.useState(0);
+
+  function handleCardLike(movie) {
+    if (movie.like) {
+      mainApi.deleteMovie(movie._id) 
+        .then()
+    } else {
+      mainApi.addNewMovie(movie)
+        .then(() => {
+          movie.like = true;
+          setMovies([...movies]);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }
 
   function updateMoviesQuantity() {
     setNumberVisibleMovies(numberVisibleMovies + additionalQuantity);
@@ -93,10 +110,9 @@ function Movies({ isLogin, isLiked, onMovieLike, handleBurger, burger }) {
           <p className='movies__noResalts'>Ничего не найдено</p> :
           <MoviesCardList 
             movies={movies} 
-            isLiked={isLiked} 
-            onMovieLike={onMovieLike} 
             onClickButton={updateMoviesQuantity}
             numberVisibleMovies={numberVisibleMovies}
+            handleCardLike={handleCardLike}
           />
         } /> 
       </main>

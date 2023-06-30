@@ -39,6 +39,64 @@ class MainApi {
     });
   }
 
+  checkToken = () => {
+    return this.makeResponse('users/me', {
+      method: 'GET',
+    });
+  };
+
+  getUserInfo() {
+    return this.makeResponse('users/me', {
+      method: 'GET',
+    });
+  }
+
+  setUserInfo(userData) {
+    return this.makeResponse('users/me', {
+      method: 'PATCH',
+      body: JSON.stringify({
+        name: userData.text, 
+        email: userData.email
+      })
+    });
+  }
+
+  getInitialSavedMovies() {
+    return this.makeResponse('movies', {
+      metod: 'GET',
+    });
+  }
+
+  deleteMovie(id) {
+    return this.makeResponse(`movie/${id}`, {
+      method: 'DELETE',
+    });
+  }
+
+  addNewMovie(data) {
+    return this.makeResponse('movies', {
+      method: 'POST',
+      body: JSON.stringify({
+        country: data.country,
+        director: data.director,
+        duration: data.duration,
+        year: data.year,
+        description: data.description,
+        image: `https://api.nomoreparties.co/${data.image.url}`,
+        trailerLink: data.trailerLink,
+        thumbnail: `https://api.nomoreparties.co/${data.image.formats.thumbnail.url}`,
+        movieId: data.id,
+        nameRU: data.nameRU,
+        nameEN: data.nameEN,
+      })
+    });
+  }
+
+  logout = () => {
+    return this.makeResponse('signout', {
+      method: 'POST'
+    });
+  }
 }
 
 const mainApi = new MainApi({

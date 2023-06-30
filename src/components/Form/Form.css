@@ -13,6 +13,7 @@
 .form__label {
   text-align: left;
   display: flex;
+  position: relative;
 }
 
 .form__label_profile {
@@ -26,6 +27,21 @@
   justify-content: space-between;
 }
 
+.form__edit {
+  color: #000000;
+  border: none;
+  background-color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 15.73px;
+  margin: 0 0 16px;
+  cursor: pointer;
+  transition: opacity .2s linear;
+}
+
+.form__edit:hover {
+  opacity: 0.7;
+}
 
 .form__label_profile:nth-child(2) {
   border-bottom: none;
@@ -120,7 +136,8 @@
 }
 
 .form__error_profile {
-  display: none;
+  position: absolute;
+  top: 34px
 }
 
 .form__button {
@@ -130,38 +147,22 @@
   border: none;
   cursor: pointer;
   transition: opacity .2s linear;
+  background-color: #2BE080;
+  height: 45px;
+  width: 396px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16.94px;
+  color: #FFFFFF;
+  border-radius: 3px;
+}
+
+.form__button_profile {
+  margin: 0;
 }
  
 .form__button:hover {
   opacity: 0.7;
-}
-
-.form__button_profile {
-  background-color: #FFFFFF;
-  font-size: 13px;
-  font-weight: 400;
-  line-height: 15.73px;
-  color: #000000;
-}
-
-.form__button_login {
-  background-color: #2BE080;
-  padding: 13px 177px 15px;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 16.94px;
-  color: #FFFFFF;
-  border-radius: 3px;
-}
-
-.form__button_signup {
-  background-color: #2BE080;
-  padding: 13px 125px 15px;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 16.94px;
-  color: #FFFFFF;
-  border-radius: 3px;
 }
 
 .form__button_disable {
@@ -262,6 +263,11 @@
     line-height: 14.52px;
   }
 
+  .form__edit {
+    font-size: 12px;
+    line-height: 14.52px;
+  }
+
   .form__error {
     max-width: 260px;
   }
@@ -307,15 +313,8 @@
     padding: 17px 0 0;
   }
   
-  .form__button_login {
-    padding: 15px 112px 15px;
-    font-size: 12px;
-    line-height: 14.52px;
-    margin: 0 0 14px;
-  }
-
-  .form__button_signup {
-    padding: 15px 67px 15px;
+  .form__button {
+    width: 260px;
     font-size: 12px;
     line-height: 14.52px;
     margin: 0 0 14px;
