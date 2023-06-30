@@ -1,6 +1,6 @@
 // компонент, который отрисовывает шапку сайта на страницу
 import './Header.css';
-import { Route, Routes, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Logo from '../Logo/Logo';
 import Navigation from '../Navigation/Navigation';
 import Account from '../Account/Account';

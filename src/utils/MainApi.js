@@ -1,4 +1,4 @@
-import { MAIN_API_URL } from "./constants";
+import { MAIN_API_URL, MOVIES_API_URL } from "./constants";
 
 class MainApi {
   constructor({ baseUrl, headers }) {
@@ -48,7 +48,8 @@ class MainApi {
   getUserInfo() {
     return this.makeResponse('users/me', {
       method: 'GET',
-    });
+    })
+    .then(result => result.data);
   }
 
   setUserInfo(userData) {
@@ -58,17 +59,19 @@ class MainApi {
         name: userData.text, 
         email: userData.email
       })
-    });
+    })
+    .then(result => result.data);
   }
 
-  getInitialSavedMovies() {
+  getSavedMovies() {
     return this.makeResponse('movies', {
       metod: 'GET',
-    });
+    })
+    .then(result => result.data);
   }
 
   deleteMovie(id) {
-    return this.makeResponse(`movie/${id}`, {
+    return this.makeResponse(`movies/${id}`, {
       method: 'DELETE',
     });
   }
@@ -82,9 +85,9 @@ class MainApi {
         duration: data.duration,
         year: data.year,
         description: data.description,
-        image: `https://api.nomoreparties.co/${data.image.url}`,
+        image: `${MOVIES_API_URL}/${data.image.url}`,
         trailerLink: data.trailerLink,
-        thumbnail: `https://api.nomoreparties.co/${data.image.formats.thumbnail.url}`,
+        thumbnail: `${MOVIES_API_URL}/${data.image.formats.thumbnail.url}`,
         movieId: data.id,
         nameRU: data.nameRU,
         nameEN: data.nameEN,

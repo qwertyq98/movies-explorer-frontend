@@ -13,7 +13,7 @@
   gap: 38px 20px;
   grid-template-columns: repeat(auto-fit, 270px);
   padding: 0;
-  justify-content: left;
+  justify-content: center;
   margin: 0;
 }
 
@@ -42,11 +42,12 @@
   height: 160px;
 }
 
-@media screen and (max-width: 990px) {
+@media screen and (min-width: 1280px) {
   .movies-list__items {
-    justify-content: center;
+    justify-content: left;
   }
 }
+
 
 @media screen and (max-width: 900px) {
   .movies-list {

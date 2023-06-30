@@ -6,10 +6,11 @@ import Footer from '../Footer/Footer';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
-import { getMovies } from '../../utils/common';
+import { getMovies, debounce } from '../../utils/common';
 import mainApi from '../../utils/MainApi';
+import { filterMovies } from '../../hooks/useFilter';
 
-function Movies({ isLogin, handleBurger, burger, handleCardLike }) {
+function Movies({ isLogin, handleBurger, burger }) {
   const [loading, setLoading] = React.useState(false);
   const [movies, setMovies] = React.useState([]);
   const [serverError, setServerError] = React.useState(false);
@@ -19,8 +20,14 @@ function Movies({ isLogin, handleBurger, burger, handleCardLike }) {
 
   function handleCardLike(movie) {
     if (movie.like) {
-      mainApi.deleteMovie(movie._id) 
-        .then()
+      mainApi.deleteMovie(movie.id) 
+        .then(() => {
+          movie.like = false;
+          setMovies([...movies]);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
       mainApi.addNewMovie(movie)
         .then(() => {
@@ -54,14 +61,35 @@ function Movies({ isLogin, handleBurger, burger, handleCardLike }) {
   }
 
   useLayoutEffect(() => {
-    window.addEventListener('resize', determineParams);
-    determineParams();
-    setMovies(JSON.parse(localStorage.getItem('searchMovies')) || []);
-   
-    return () => window.removeEventListener('resize', determineParams);
-  }, []);
+    const debounceDetermineParams = debounce(determineParams, 200);
+    const searchMovies = JSON.parse(localStorage.getItem('searchMovies'));
 
-  useEffect(() => {
+    if (searchMovies) {
+      mainApi.getSavedMovies()
+        .then((savedMovies) => {
+          const savedMoviesIds = new Set();
+
+          savedMovies.forEach(movie => {
+            savedMoviesIds.add(movie.movieId);
+          });
+          searchMovies.forEach(movie => {
+            movie.like = savedMoviesIds.has(movie.id); 
+          });
+          setMovies(searchMovies);
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+
+    determineParams();
+    window.addEventListener('resize', debounceDetermineParams);
+    return () => window.removeEventListener('resize', debounceDetermineParams);
+  }, []);
+  
+
+  // проставить число видимых фильмов перед первы поиском
+  useEffect(() => { 
     if (numberVisibleMovies === 0) {
       setNumberVisibleMovies(initialQuantity);
     }
@@ -70,18 +98,29 @@ function Movies({ isLogin, handleBurger, burger, handleCardLike }) {
   function onChangeFilter({searchString, shortFilms}) {
     setLoading(true);
     setNumberVisibleMovies(initialQuantity);
-    getMovies()
-      .then(movies => {
-        const resaltMovies = movies.filter(movie => {
-          const isFiltred = !shortFilms || movie.duration < 40;
-          return isFiltred && (movie.nameRU.toLowerCase().includes(searchString) || movie.nameEN.toLowerCase().includes(searchString));
-        })
+
+    Promise.all([
+      getMovies(),
+      mainApi.getSavedMovies()
+    ])
+      .then(([allMovies, savedMovies]) => {
+        const filteredMovies = filterMovies(allMovies, {
+          searchString: searchString,
+          shortFilms: shortFilms,
+        });
+        const savedMoviesIds = new Set();
+      
+        savedMovies.forEach(movie => {
+          savedMoviesIds.add(movie.movieId);
+        });
+        filteredMovies.forEach(movie => {
+          movie.like = savedMoviesIds.has(movie.id); 
+        });
+
+
         setServerError(false);
-        return resaltMovies;
-      })
-      .then(movies => {
-        setMovies(movies);
-        localStorage.setItem('searchMovies', JSON.stringify(movies));
+        setMovies(filteredMovies);
+        localStorage.setItem('searchMovies', JSON.stringify(filteredMovies));
         localStorage.setItem('shortFilms', JSON.stringify(shortFilms));
         localStorage.setItem('searchString', searchString);
       })
@@ -99,6 +138,7 @@ function Movies({ isLogin, handleBurger, burger, handleCardLike }) {
           onChangeFilter={onChangeFilter}
           initialShortFilms={JSON.parse(localStorage.getItem('shortFilms')) || false}
           initialSearchString={localStorage.getItem('searchString') || ''}
+          searchStringRequired={true}
         />
         <Preloader loading={loading} element={
           serverError ? 
@@ -106,8 +146,8 @@ function Movies({ isLogin, handleBurger, burger, handleCardLike }) {
             Во&nbsp;время запроса произошла ошибка. Возможно, проблема с&nbsp;соединением 
             или сервер недоступен. Подождите немного и&nbsp;попробуйте ещё раз
           </p> :
-          movies.length === 0 ? 
-          <p className='movies__noResalts'>Ничего не найдено</p> :
+          movies.length === 0 && localStorage.getItem('searchString') ? 
+          <p className='movies__noResults'>Ничего не найдено</p> :
           <MoviesCardList 
             movies={movies} 
             onClickButton={updateMoviesQuantity}

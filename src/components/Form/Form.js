@@ -50,7 +50,10 @@ function Form({
         {location.pathname === '/signup' || location.pathname === '/profile' ? 
           <label className={`form__label form__label_${name}`}>Имя
             <input 
-              className={`form__text form__text_${name}`} 
+              className={errors.text ? 
+                `form__text form__text_${name} form__text_${name}_red` :
+                `form__text form__text_${name}`
+              } 
               type="text" 
               name='text' 
               defaultValue={values.text || '' || currentUser?.name}
@@ -64,7 +67,10 @@ function Form({
         }
         <label className={`form__label form__label_${name}`}>E-mail
           <input 
-            className={`form__text form__text_${name}`} 
+            className={errors.email ? 
+              `form__text form__text_${name} form__text_${name}_red` :
+              `form__text form__text_${name}`
+            } 
             type="email" 
             name='email' 
             defaultValue={values.email || '' || currentUser?.email}
@@ -77,7 +83,10 @@ function Form({
         { location.pathname === '/signin' || location.pathname === '/signup' ? 
           <label className={`form__label form__label_${name}`}>Пароль
             <input 
-              className={`form__text form__text_${name} form__text_${name}_red`} 
+              className={errors.password ? 
+                `form__text form__text_${name} form__text_${name}_red` :
+                `form__text form__text_${name}`
+              } 
               type="password" 
               name='password' 
               defaultValue={values.password || ''}

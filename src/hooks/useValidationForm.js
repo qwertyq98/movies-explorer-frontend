@@ -1,38 +1,3 @@
-// import React, { useEffect} from "react";
-
-// export default function useValidationForm() {
-//   const [values, setValues] = React.useState({});
-//   const [errors, setErrors] = React.useState({});
-//   const [valid, setValid] = React.useState(false);
-
-//   useEffect(() => {
-//     setValid(Object.values(errors).every(err => err === ''));
-//     console.log(Object.values(errors).every(err => err === ''));
-//   }, [errors]);
-
-//   function onChangeHandler(e) {
-//     _validateInput(e.target);
-//     setValues({...values, [e.target.name]: e.target.value});
-//     setErrors({...errors, [e.target.name]: e.target.validationMessage});
-//   }
-
-//   function _validateInput(input) {
-//     if (input.validity.valueMissing && input.getAttribute('emptytextvalidation')) {
-//       input.setCustomValidity(input.getAttribute('emptytextvalidation'));
-//     } else {
-//       input.setCustomValidity('');
-//     }
-//   }
-
-//   return {
-//     values,
-//     errors,
-//     onChangeHandler,
-//     validateForm,
-//     valid,
-//   };
-// }
-
 import React, { useCallback } from "react";
 
 export function useValidationForm() {

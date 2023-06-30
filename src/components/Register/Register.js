@@ -4,8 +4,8 @@ import Form from '../Form/Form';
 import TitleForm from '../TitleForm/TitleForm';
 import Logo from '../Logo/Logo';
 
-function Register({onSubmit, serverError}) {
-  
+function Register({onSubmit, serverError, loading }) {
+
   return (
     <main className='signup'>
       <section className='signup__wrapper'>
@@ -15,7 +15,7 @@ function Register({onSubmit, serverError}) {
           type='signup'
           name='signup'
           onSubmit={onSubmit}
-          buttonName='Зарегистрироваться'
+          buttonName={loading? 'Регистрация...' : 'Зарегистрироваться'}
           paragrafText='Уже зарегистрированы?'
           linkText='Войти'
           route='/signin'

@@ -5,7 +5,7 @@ import Form from '../Form/Form';
 import TitleForm from '../TitleForm/TitleForm';
 import Toast from '../Toast/Toast';
 
-function Profile({currentUser, onSubmit, serverError, signOut, successMessage }) {
+function Profile({currentUser, onSubmit, serverError, signOut, successMessage, loading }) {
 
   const [isEdit, setIsEdit] = React.useState(true);
   const [readOnly, setReadOnly] = React.useState(true);
@@ -22,7 +22,7 @@ function Profile({currentUser, onSubmit, serverError, signOut, successMessage })
         <Form 
           type='profile'
           name='profile'
-          buttonName='Coхранить'
+          buttonName={loading? 'Сохранение...' : 'Coхранить'}
           buttonEdit='Редактировать'
           paragrafText=''
           linkText='Выйти из аккаунта'

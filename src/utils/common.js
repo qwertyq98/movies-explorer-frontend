@@ -12,6 +12,20 @@ function getMovies() {
     })
 }
 
+function debounce(func, delay) {
+  let interval;
+
+  return function() {
+    if (interval) {
+      clearInterval(interval);
+    }
+
+    interval = setTimeout(() => func.apply(this, arguments), delay);
+  }
+}
+
+
 export {
   getMovies,
+  debounce,
 }

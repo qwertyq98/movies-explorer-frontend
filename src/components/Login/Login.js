@@ -4,7 +4,7 @@ import Form from '../Form/Form';
 import TitleForm from '../TitleForm/TitleForm';
 import Logo from '../Logo/Logo';
 
-function Login({serverError, onSubmit}) {
+function Login({serverError, onSubmit, loading}) {
 
   return (
     <main className='login'>
@@ -15,7 +15,7 @@ function Login({serverError, onSubmit}) {
           type='login'
           name='login'
           onSubmit={onSubmit}
-          buttonName='Войти'
+          buttonName={loading? 'Вход...' : 'Войти'}
           paragrafText='Ещё не зарегистрированы?'
           linkText='Регистрация'
           route='/signup'

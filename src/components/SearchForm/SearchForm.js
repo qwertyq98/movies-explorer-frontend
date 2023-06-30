@@ -4,11 +4,11 @@ import './SearchForm.css';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import {useValidationForm} from '../../hooks/useValidationForm';
 
-function SearchForm({ onChangeFilter, initialShortFilms, initialSearchString }) {
+function SearchForm({ onChangeFilter, initialShortFilms, initialSearchString, searchStringRequired }) {
   const [searchString, setSearchString] = React.useState(initialSearchString);
   const [isFilter, setIsFilter] = React.useState(initialShortFilms);
 
-  const {valid, onChangeHandler, errors, onSubmitHandler} = useValidationForm();
+  const {onChangeHandler, errors, onSubmitHandler} = useValidationForm();
 
   function handleSubmit(e) {
     const form = e.target;
@@ -25,13 +25,13 @@ function SearchForm({ onChangeFilter, initialShortFilms, initialSearchString }) 
   }
 
   useEffect(() => {
-    if (valid) {
+    if (!searchStringRequired || searchString !== '') {
       onChangeFilter({
         searchString: searchString,
         shortFilms: isFilter,
       });
     }
-  }, [searchString, isFilter, valid]);
+  }, [searchString, isFilter]);
  
   return (
       <section className='search-form'>
@@ -52,7 +52,7 @@ function SearchForm({ onChangeFilter, initialShortFilms, initialSearchString }) 
               onChange={onChangeHandler}
               defaultValue={initialSearchString || ''}
               emptytextvalidation='Нужно ввести ключевое слово'
-              required 
+              required={searchStringRequired}
             />
             <span className='search-form__error'>{errors.search || ''}</span>
             <button type="submit" className='search-form__button' />

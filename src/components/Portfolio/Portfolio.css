@@ -37,7 +37,7 @@
   justify-content: space-between;
   flex-direction: row;
   transition: opacity .2s linear;
-  align-items: end;
+  align-items: flex-end;
 }
 
 .portfolio__link:hover {

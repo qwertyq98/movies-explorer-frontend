@@ -7,7 +7,7 @@
   background-color: #FFFFFF;
 }
 
-.movies__noResalts {
+.movies__noResults {
   max-width: 1280px;
   box-sizing: border-box;
   padding: 0 70px;
@@ -34,7 +34,7 @@
 }
 
 @media screen and (max-width: 900px) {
-  .movies__noResalts {
+  .movies__noResults {
     padding: 0 30px;
     max-width: 500px;
   }
@@ -45,7 +45,7 @@
 }
 
 @media screen and (max-width: 540px) {
-  .movies__noResalts {
+  .movies__noResults {
     font-size: 11px;
     padding: 0 14px;
   }

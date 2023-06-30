@@ -1,15 +1,19 @@
-// import React from "react";
+function filterMovies(movies, {searchString, shortFilms, likedFilms}) {
+  const savedMoviesIds = new Set();
 
-// function useFilter(item) {
-//   getMovies()
-//     .then(movies => {
-//       const resaltMovies = movies.filter(movie => {
-//         return movie.nameRU.toLowerCase().includes(item) || movie.nameEN.toLowerCase().includes(item);
-//       });
+  likedFilms && likedFilms.forEach(movie => {
+    savedMoviesIds.add(movie.movieId);
+  });
 
-//       // setMovies(resaltMovies);
-//     })
-//     .catch(_ => {
-//       // поменять состояние ошибки и показать р
-//     });
-// }
+  return movies.filter(movie => {
+    return (
+      (!likedFilms || savedMoviesIds.has(movie.id)) &&
+      (!shortFilms || movie.duration < 40) &&
+      (movie.nameRU.toLowerCase().includes(searchString) || movie.nameEN.toLowerCase().includes(searchString))
+    )
+  });
+}
+
+export {
+  filterMovies
+}

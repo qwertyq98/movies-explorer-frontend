@@ -1,5 +1,5 @@
 // корневой компонент приложения
-import React, { useRef, useEffect, useState, useLayoutEffect } from 'react'; 
+import React, { useEffect, useLayoutEffect } from 'react'; 
 import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 import Header from '../Header/Header';
@@ -14,13 +14,14 @@ import Register from '../Register/Register';
 import NotFound from '../NotFound/NotFound';
 import mainApi from '../../utils/MainApi';
 import ProtectedRouteElement from '../ProtectedRoute/ProtectedRoute';
+import UnProtectedRouteElement from '../UnProtectedRoute/UnProtectedRoute';
+import { debounce } from '../../utils/common';
 
 function App() {
-  const [isLogin, setIsLogin] = React.useState(false);
+  const [isLogin, setIsLogin] = React.useState(undefined);
   const showMoreRef = React.useRef(null);
   const [burger, setBurger] = React.useState(false);
   const [serverError, setServerError] = React.useState('');
-  //const [loggedIn, setLoggedIn] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [successMessage, setSuccessMessage] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({
@@ -32,8 +33,11 @@ function App() {
 
   useEffect(() => {
     tokenCheck();
-    setServerError('');
   }, []);
+
+  useEffect(() => {
+    setServerError('');
+  }, [location]);
 
   React.useEffect(() => {
     if (!isLogin) {
@@ -41,7 +45,7 @@ function App() {
     }
     mainApi.getUserInfo()
       .then((userData) => {
-        setCurrentUser(userData.data);
+        setCurrentUser(userData);
       })
       .catch((err) => {
         console.log(err);
@@ -49,29 +53,22 @@ function App() {
   }, [isLogin]);
 
   const tokenCheck = () => {
-    setLoading(true);
     mainApi.checkToken().then((data) => {
       setIsLogin(true);
         setCurrentUser({
           text: data.name,
           email: data.email,
         });
-        if (location.pathname === "/movies") {
-          navigate("/movies", {replace: true});
-        } else if (location.pathname === "/profile") {
-          navigate("/profile", {replace: true});
-        }
     })
     .catch((err) => console.log(err))
-    .finally(() => setLoading(false));
   }
 
   useLayoutEffect(() => {
-    function updateWidth() {
+    const updateWidth = debounce(() => {
       if (window.innerWidth > 770) {
         setBurger(false);
       }
-    }
+    }, 200);
 
     window.addEventListener('resize', updateWidth);
     return () => window.removeEventListener('resize', updateWidth);
@@ -90,7 +87,7 @@ function App() {
 
   function handleSubmitRegister({ text, email, password }) {
     if (text && email && password) {
-      
+      setLoading(true);
       mainApi.register(text, email, password)
         .then(() => {
           setCurrentUser({
@@ -102,7 +99,8 @@ function App() {
         .catch((err) => {
           onRegistered(false);
           setServerError(err);
-        });
+        })
+        .finally(() => setLoading(false));
     }
   } 
 
@@ -116,6 +114,7 @@ function App() {
     if (!email || !password){
       return;
     }
+    setLoading(true);
     mainApi.authorize(email, password)
       .then(() => {
         setIsLogin(true);
@@ -125,13 +124,16 @@ function App() {
         console.log(err);
         setServerError(err);
       })
+      .finally(() => {
+        setLoading(false);
+      })
   }
 
   function handleUpdateUser(userData) {
     setLoading(true);
     mainApi.setUserInfo(userData)
-      .then((data) => {
-        setCurrentUser(data.data);
+      .then((newUserData) => {
+        setCurrentUser(newUserData);
         setSuccessMessage(true);
         setTimeout(() => setSuccessMessage(false), 2000)
       })
@@ -147,7 +149,6 @@ function App() {
   function signOut() {
     mainApi.logout()
       .then(() => {
-        setLoading(false)
         navigate('/signin');
         setBurger(false);
         setIsLogin(false);
@@ -165,22 +166,27 @@ function App() {
               <Footer />
             </>
           } />
-          <Route path={isLogin ? '' : '/signin'} element={
-            <Login 
-              onSubmit={handleSubmitLogin}
-              serverError={serverError}
-              isLogin={isLogin}
-            />
+          <Route path='/signin' element={
+            <>
+              <UnProtectedRouteElement element={Login}
+                onSubmit={handleSubmitLogin}
+                serverError={serverError}
+                isLogin={isLogin}
+                loading={loading}
+              />
+            </>
           } />
-          <Route path={isLogin ? '' : '/signup'} element={
-            <Register 
-              onSubmit={handleSubmitRegister} 
-              serverError={serverError}
-              isLogin={isLogin}
-            />
+          <Route path='/signup' element={
+            <>
+              <UnProtectedRouteElement element={Register} 
+                onSubmit={handleSubmitRegister} 
+                serverError={serverError}
+                isLogin={isLogin}
+                loading={loading}
+              />
+            </>
           } />
           <Route path='*' element={<NotFound />} />
-
           <Route path='/movies' element={
             <>
               <ProtectedRouteElement element={Movies} 
@@ -214,6 +220,7 @@ function App() {
                 signOut={signOut}
                 isLogin={isLogin}
                 successMessage={successMessage}
+                loading={loading}
               />
             </>
           } />
