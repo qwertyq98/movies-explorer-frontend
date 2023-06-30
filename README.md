@@ -11,9 +11,15 @@
 - БЭМ
 
 Адрес репозитория: https://github.com/qwertyq98/movies-explorer-frontend
+
 IP: 158.160.101.20
+
 Frontend: https://movies-kapustina.nomoreparties.sbs
 
 # Макет 
 
 https://disk.yandex.ru/d/FqS3NITsFZ4vnQ
+
+# пул реквест
+
+https://github.com/qwertyq98/movies-explorer-frontend/pull/2
