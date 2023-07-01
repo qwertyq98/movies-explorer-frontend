@@ -1,5 +1,5 @@
 export const MOVIES_API_URL = "https://api.nomoreparties.co";
-export const MAIN_API_URL = "http://localhost:3000";
+export const MAIN_API_URL = "https://api.movies-kapustina.nomoredomains.rocks";
 
 export const SHORT_FILM_DURATION = 40;
 export const QUANTITY_BY_WIDTH = [{
@@ -18,4 +18,3 @@ export const QUANTITY_BY_WIDTH = [{
   initialQuantity: 16,
   additionalQuantity: 4,
 }];
-//"https://api.movies-kapustina.nomoredomains.rocks"
