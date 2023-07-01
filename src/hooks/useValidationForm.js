@@ -31,6 +31,9 @@ export function useValidationForm() {
       values[input.name] = input.value;
       errors[input.name] = input.validationMessage;
     };
+    // if(!regexpEmail.test(values.email)) {
+    //   errors.email = 'Адрес электронной почты введен неправильно!';
+    // }
 
     setValues({...values});
     setErrors({...errors});
@@ -38,8 +41,10 @@ export function useValidationForm() {
   }
 
   function _validateInput(input) {
-    if (input.validity.valueMissing && input.getAttribute('emptytextvalidation')) {
+    if (input.validity.valueMissing && input.hasAttribute('emptytextvalidation')) {
       input.setCustomValidity(input.getAttribute('emptytextvalidation'));
+    } else if (input.validity.patternMismatch && input.hasAttribute('patterntextvalidation')) {
+      input.setCustomValidity(input.getAttribute('patterntextvalidation'));
     } else {
       input.setCustomValidity('');
     }

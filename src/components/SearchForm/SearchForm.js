@@ -5,8 +5,8 @@ import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import {useValidationForm} from '../../hooks/useValidationForm';
 
 function SearchForm({ onChangeFilter, initialShortFilms, initialSearchString, searchStringRequired }) {
-  const [searchString, setSearchString] = React.useState(initialSearchString);
-  const [isFilter, setIsFilter] = React.useState(initialShortFilms);
+  const [searchString, setSearchString] = React.useState(initialSearchString || '');
+  const [isFilter, setIsFilter] = React.useState(initialShortFilms || false);
 
   const {onChangeHandler, errors, onSubmitHandler} = useValidationForm();
 
@@ -25,7 +25,7 @@ function SearchForm({ onChangeFilter, initialShortFilms, initialSearchString, se
   }
 
   useEffect(() => {
-    if (!searchStringRequired || searchString !== '') {
+    if (!searchStringRequired || searchString) {
       onChangeFilter({
         searchString: searchString,
         shortFilms: isFilter,

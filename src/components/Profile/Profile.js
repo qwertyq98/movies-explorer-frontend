@@ -1,12 +1,13 @@
 // компонент страницы изменения профиля
 import './Profile.css';
-import React from 'react';
+import React, {useContext} from 'react';
 import Form from '../Form/Form';
 import TitleForm from '../TitleForm/TitleForm';
 import Toast from '../Toast/Toast';
+import { CurrentUserContext } from '../../context/CurrentUserContext';
 
-function Profile({currentUser, onSubmit, serverError, signOut, successMessage, loading }) {
-
+function Profile({ onSubmit, serverError, signOut, successMessage, loading }) {
+  const currentUser = useContext(CurrentUserContext);
   const [isEdit, setIsEdit] = React.useState(true);
   const [readOnly, setReadOnly] = React.useState(true);
 
@@ -27,13 +28,13 @@ function Profile({currentUser, onSubmit, serverError, signOut, successMessage, l
           paragrafText=''
           linkText='Выйти из аккаунта'
           route="/signin"
-          currentUser={currentUser}
           isEdit={isEdit}
           handleEdit={handleEdit}
           readOnly={readOnly}
           onSubmit={onSubmit}
           serverError={serverError}
           signOut={signOut}
+          disabled={loading}
         />
         { successMessage ? <Toast /> : <></>}
       </section>

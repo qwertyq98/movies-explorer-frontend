@@ -1,8 +1,9 @@
 // компонент страницы изменения профиля
 import './Form.css';
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useValidationForm } from '../../hooks/useValidationForm';
+import { CurrentUserContext } from '../../context/CurrentUserContext';
 
 function Form({ 
   type, 
@@ -13,17 +14,18 @@ function Form({
   linkText, 
   route, 
   serverError, 
-  currentUser, 
   buttonEdit, 
   isEdit, 
   handleEdit, 
   readOnly,
-  signOut
+  signOut,
+  disabled,
   }) {
   const { values, errors, valid, onChangeHandler, onSubmitHandler } = useValidationForm();
   const formRef = React.useRef('');
-  const [disabled, setDisabled] = React.useState(true);
+  const [buttonDisabled, setButtonDisabled] = React.useState(true);
   const location = useLocation();
+  const currentUser = useContext(CurrentUserContext);
 
   useEffect(() => {
     if(location.pathname === '/profile') {
@@ -32,9 +34,9 @@ function Form({
         (values.text !== undefined && values.text !== currentUser.name)
       )
 
-      setDisabled(!valid || !profileIsChanged);
+      setButtonDisabled(!valid || !profileIsChanged);
     } else {
-      setDisabled(!valid);
+      setButtonDisabled(!valid);
     }
   }, [values, valid]);
 
@@ -58,9 +60,11 @@ function Form({
               name='text' 
               defaultValue={values.text || '' || currentUser?.name}
               onChange={onChangeHandler}
-              pattern='^[A-Za-zА-Яа-яЁё\s\-]+$'
+              pattern='^[A-Za-zА-Яа-яЁё\s\-]{2,30}$'
+              patterntextvalidation='Допустимы только символы кириллицы, латиницы, цифр и -'
               readOnly={readOnly}
-              required 
+              disabled={disabled}
+              required
             />
             <span className={`form__error form__error_${name}`}>{errors.text}</span>
           </label> : <></>
@@ -71,11 +75,14 @@ function Form({
               `form__text form__text_${name} form__text_${name}_red` :
               `form__text form__text_${name}`
             } 
-            type="email" 
+            type="text" 
             name='email' 
             defaultValue={values.email || '' || currentUser?.email}
             onChange={onChangeHandler}
             readOnly={readOnly}
+            disabled={disabled}
+            pattern='^[A-Za-z0-9.-_]+@[A-Za-z0-9.-_]+\.[A-Za-z]{2,8}$'
+            patterntextvalidation='Введен некорректный email'
             required 
           />
           <span className={`form__error form__error_${name}`}>{errors.email}</span>
@@ -91,6 +98,7 @@ function Form({
               name='password' 
               defaultValue={values.password || ''}
               onChange={onChangeHandler}
+              disabled={disabled}
               autoComplete="on"
               required 
             />
@@ -107,11 +115,11 @@ function Form({
         }
         {!isEdit ? 
           <button 
-            className={!disabled ? 
-            `form__button form__button_${name}` : 
-            `form__button form__button_${name} form__button_disable`} 
+            className={buttonDisabled || disabled ?
+            `form__button form__button_${name} form__button_disable` :
+            `form__button form__button_${name}`}
             type="submit" 
-            disabled={disabled}
+            disabled={buttonDisabled || disabled}
           >{buttonName}</button> :
           <></>
         } 

@@ -14,9 +14,9 @@ const Account = ({ burger, handleBurger }) => {
   return (
     <div className={`${ burger ? 'account_burger': 'account' }`}>
       <Link to='/profile' className={
-        location.pathname === '/' ? 
-        'account__button account__button_white account__button_name':
-        'account__button account__button_name'
+        location.pathname !== '/' || burger ? 
+        'account__button account__button_name':
+        'account__button account__button_white account__button_name'
         }
         onClick={onClick}>
         Аккаунт

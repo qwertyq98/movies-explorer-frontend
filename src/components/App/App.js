@@ -60,7 +60,10 @@ function App() {
           email: data.email,
         });
     })
-    .catch((err) => console.log(err))
+    .catch((err) => {
+      setIsLogin(false);
+      console.log(err);
+    })
   }
 
   useLayoutEffect(() => {
@@ -90,6 +93,7 @@ function App() {
       setLoading(true);
       mainApi.register(text, email, password)
         .then(() => {
+          setIsLogin(true);
           setCurrentUser({
             text,
             email,
@@ -149,7 +153,7 @@ function App() {
   function signOut() {
     mainApi.logout()
       .then(() => {
-        navigate('/signin');
+        navigate('/');
         setBurger(false);
         setIsLogin(false);
       });
@@ -193,7 +197,6 @@ function App() {
                 isLogin={isLogin} 
                 handleBurger={handleBurger} 
                 burger={burger}
-                currentUser={currentUser}
               />
             </>
           } />
@@ -214,7 +217,6 @@ function App() {
                 burger={burger}
               />
               <ProtectedRouteElement element={Profile} 
-                currentUser={currentUser}
                 onSubmit={handleUpdateUser}
                 serverError={serverError}
                 signOut={signOut}

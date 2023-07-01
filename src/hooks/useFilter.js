@@ -1,3 +1,4 @@
+import { SHORT_FILM_DURATION } from "../utils/constants";
 function filterMovies(movies, {searchString, shortFilms, likedFilms}) {
   const savedMoviesIds = new Set();
 
@@ -8,8 +9,11 @@ function filterMovies(movies, {searchString, shortFilms, likedFilms}) {
   return movies.filter(movie => {
     return (
       (!likedFilms || savedMoviesIds.has(movie.id)) &&
-      (!shortFilms || movie.duration < 40) &&
-      (movie.nameRU.toLowerCase().includes(searchString) || movie.nameEN.toLowerCase().includes(searchString))
+      (!shortFilms || movie.duration < SHORT_FILM_DURATION) &&
+      (
+        movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) || 
+        movie.nameEN.toLowerCase().includes(searchString.toLowerCase())
+      )
     )
   });
 }

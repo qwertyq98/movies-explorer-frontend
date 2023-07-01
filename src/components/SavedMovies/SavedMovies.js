@@ -14,8 +14,6 @@ function SavedMovies({ isLogin, handleBurger, burger }) {
   const [loading, setLoading] = React.useState(false);
   const [movies, setMovies] = React.useState([]);
   const [serverError, setServerError] = React.useState(false);
-  const initialShortFilms = JSON.parse(localStorage.getItem('shortSavedFilms')) || false;
-  const initialSearchString = localStorage.getItem('searchSavedString') || '';
 
   function handleCardLike(movie) {
     mainApi.deleteMovie(movie.id) 
@@ -30,8 +28,8 @@ function SavedMovies({ isLogin, handleBurger, burger }) {
 
   useLayoutEffect(() => {
     onChangeFilter({
-      searchString: initialSearchString,
-      shortFilms: initialShortFilms,
+      searchString: '',
+      shortFilms: false,
     });
   }, []);
   
@@ -51,10 +49,9 @@ function SavedMovies({ isLogin, handleBurger, burger }) {
 
         setServerError(false);
         setMovies(filteredMovies);
-        localStorage.setItem('shortSavedFilms', JSON.stringify(shortFilms));
-        localStorage.setItem('searchSavedString', searchString);
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error(err);
         setServerError(true);
       })
       .finally(() => setLoading(false));
@@ -66,8 +63,6 @@ function SavedMovies({ isLogin, handleBurger, burger }) {
         <Header isLogin={ isLogin } handleBurger={handleBurger} burger={burger} />
         <SearchForm 
           onChangeFilter={onChangeFilter}
-          initialShortFilms={initialShortFilms}
-          initialSearchString={initialSearchString}
           searchStringRequired={false}
         />
         <Preloader loading={loading} element={

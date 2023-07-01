@@ -20,6 +20,7 @@ function Login({serverError, onSubmit, loading}) {
           linkText='Регистрация'
           route='/signup'
           serverError={serverError}
+          disabled={loading}
         />
       </section>
     </main>

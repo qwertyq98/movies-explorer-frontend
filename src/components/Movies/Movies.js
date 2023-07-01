@@ -9,6 +9,7 @@ import Preloader from '../Preloader/Preloader';
 import { getMovies, debounce } from '../../utils/common';
 import mainApi from '../../utils/MainApi';
 import { filterMovies } from '../../hooks/useFilter';
+import { QUANTITY_BY_WIDTH } from '../../utils/constants';
 
 function Movies({ isLogin, handleBurger, burger }) {
   const [loading, setLoading] = React.useState(false);
@@ -45,18 +46,12 @@ function Movies({ isLogin, handleBurger, burger }) {
   }
 
   function determineParams() {
-    if (window.innerWidth > 1280) {
-      setInitialQuantity(16); //изначальное число фильмов
-      setAdditionalQuantity(4); //число фильмов, добавляемое после нажатия "Еще"
-    } else if (window.innerWidth > 990) {
-      setInitialQuantity(9);
-      setAdditionalQuantity(3);
-    } else if (window.innerWidth > 770) {
-      setInitialQuantity(8);
-      setAdditionalQuantity(2);
-    } else {
-      setInitialQuantity(5);
-      setAdditionalQuantity(2);
+    for (const params of QUANTITY_BY_WIDTH) {
+      if (window.innerWidth < params.maxWidth || !params.maxWidth) {
+        setInitialQuantity(params.initialQuantity);
+        setAdditionalQuantity(params.additionalQuantity);
+        break;
+      }
     }
   }
 

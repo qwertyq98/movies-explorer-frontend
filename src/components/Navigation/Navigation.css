@@ -9,7 +9,7 @@
   font-size: 13px;
   line-height: 18px;
   margin-right: 16px;
-  font-weight: 500;
+  font-weight: 400;
   text-decoration: none;
   transition: opacity .2s linear;
 }
@@ -22,9 +22,19 @@
   opacity: 0.7;
 }
 
-.navigation__films_saved {
-  margin-right: 0;
+.navigation__saved-films {
+  color: #000000;
+  font-size: 13px;
+  line-height: 18px;
+  margin-right: 16px;
   font-weight: 400;
+  text-decoration: none;
+  transition: opacity .2s linear;
+  margin-right: 0;
+}
+
+.navigation__active {
+  font-weight: 500;
 }
 
 @media screen and (max-width: 770px) {

@@ -20,6 +20,7 @@ function Register({onSubmit, serverError, loading }) {
           linkText='Войти'
           route='/signin'
           serverError={serverError}
+          disabled={loading}
         />
       </section>
     </main>
