@@ -1,32 +1,27 @@
 // компонент, который отрисовывает шапку сайта на страницу
 import './Header.css';
-import { Route, Routes, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Logo from '../Logo/Logo';
 import Navigation from '../Navigation/Navigation';
 import Account from '../Account/Account';
 import BurgerHeader from '../BurgerHeader/BurgerHeader';
 import React from 'react'; 
+import { useLocation } from 'react-router-dom';
 
-function Header({ isLogin }) {
-  const [isBurgerMenu, setIsBurgerMenu] = React.useState(false);
-
-  const handleToggleBurger = () => {
-    setIsBurgerMenu(!isBurgerMenu);
-  };
-
+function Header({ isLogin, handleBurger, burger }) {
+  const location = useLocation();
   return (
     <>
       {isLogin ? 
-        <header className ='header'>
+        <header className ={location.pathname === '/' ? 'header header_gray': 'header'}>
           <div className='header__wrapper'>
             <Logo />
             <Navigation />
-            {isBurgerMenu ? null : <Account isBurgerMenu={isBurgerMenu} />}
-            <button className='header__burger'onClick={handleToggleBurger} />
-            <BurgerHeader isBurgerMenu={isBurgerMenu} handleToggleBurger={handleToggleBurger} />
+            {!burger ? <Account burger={burger} handleBurger={handleBurger} /> : <></>}
+            <button className='header__burger' onClick={handleBurger} />
+            <BurgerHeader burger={burger} handleBurger={handleBurger} />
           </div>
         </header> : 
-
         <header className ='header header_gray'>
           <div className='header__wrapper'>
             <Logo />

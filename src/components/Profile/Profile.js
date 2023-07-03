@@ -1,28 +1,42 @@
 // компонент страницы изменения профиля
 import './Profile.css';
+import React, {useContext} from 'react';
 import Form from '../Form/Form';
 import TitleForm from '../TitleForm/TitleForm';
+import Toast from '../Toast/Toast';
+import { CurrentUserContext } from '../../context/CurrentUserContext';
 
-function Profile({ user }) {
+function Profile({ onSubmit, serverError, signOut, successMessage, loading }) {
+  const currentUser = useContext(CurrentUserContext);
+  const [isEdit, setIsEdit] = React.useState(true);
+  const [readOnly, setReadOnly] = React.useState(true);
 
-  function handleSubmit(e) {
-    e.preventDefault();
-  } 
+  function handleEdit() {
+    setIsEdit(!isEdit);
+    setReadOnly(!readOnly);
+  }
 
   return (
     <main className='profile'>
       <section className='profile__wrapper'>
-        <TitleForm title={`Привет, ${user.name}!`} />
+        <TitleForm title={`Привет, ${currentUser?.name}!`} />
         <Form 
-          user={user} 
           type='profile'
           name='profile'
-          onSubmit={handleSubmit}
-          buttonName='Редактировать'
+          buttonName={loading? 'Сохранение...' : 'Coхранить'}
+          buttonEdit='Редактировать'
           paragrafText=''
           linkText='Выйти из аккаунта'
           route="/signin"
+          isEdit={isEdit}
+          handleEdit={handleEdit}
+          readOnly={readOnly}
+          onSubmit={onSubmit}
+          serverError={serverError}
+          signOut={signOut}
+          disabled={loading}
         />
+        { successMessage ? <Toast /> : <></>}
       </section>
     </main>
   )

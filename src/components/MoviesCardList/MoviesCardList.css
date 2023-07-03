@@ -42,6 +42,13 @@
   height: 160px;
 }
 
+@media screen and (min-width: 1280px) {
+  .movies-list__items {
+    justify-content: left;
+  }
+}
+
+
 @media screen and (max-width: 900px) {
   .movies-list {
     padding: 0 30px;
@@ -50,6 +57,7 @@
   .movies-list__items {
     gap: 30px;
     grid-template-columns: repeat(auto-fit, 339px);
+    grid-auto-rows: 269px;
   }
 
   .movies__empty-block {
@@ -68,6 +76,7 @@
     gap: 34px;
     grid-template-columns: repeat(auto-fit, 300px);
     margin: 50px 0 0;
+    grid-auto-rows: 246px;
   }
   
   .movies-list__button {

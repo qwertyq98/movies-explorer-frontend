@@ -1,19 +1,31 @@
 // компонент бургерного меню
 import './BurgerHeader.css';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import Account from '../Account/Account';
 
-const BurgerHeader = ({ isBurgerMenu, handleToggleBurger }) => {
+const BurgerHeader = ({ burger, handleBurger }) => {
   return ( 
-    <div className={`${ isBurgerMenu ? 'burger_active': 'burger' }`}>
+    <div className={`${ burger ? 'burger_active': 'burger' }`}>
       <div className='burger__wrapper'>
-        <button className='burger__close-button' onClick={handleToggleBurger}/>
+        <button className='burger__close-button' onClick={handleBurger}/>
         <nav className='burger__navigation'>
-          <Link to="/" className='burger__link'>Главная</Link>
-          <Link to="/movies" className='burger__link burger__link_line'>Фильмы</Link>
-          <Link to="/saved-movies" className='burger__link'>Сохранённые фильмы</Link>
+          <NavLink to="/" 
+            className={({isActive}) => isActive ? 
+            'burger__link burger__link_line': 'burger__link'} 
+            onClick={handleBurger}
+          >Главная</NavLink>
+          <NavLink to="/movies"
+            className={({isActive}) => isActive ? 
+            'burger__link burger__link_line': 'burger__link'} 
+            onClick={handleBurger}
+          >Фильмы</NavLink>
+          <NavLink to="/saved-movies"
+            className={({isActive}) => isActive ? 
+            'burger__link burger__link_line': 'burger__link'} 
+            onClick={handleBurger}
+          >Сохранённые фильмы</NavLink>
         </nav>
-        <Account isBurgerMenu = {isBurgerMenu} />
+        <Account burger = {burger} handleBurger={handleBurger} />
       </div>
     </div>
   )

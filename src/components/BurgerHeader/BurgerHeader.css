@@ -1,5 +1,6 @@
 .burger {
   display: none;
+  pointer-events: none;
 }
 
 .burger_active {
@@ -18,6 +19,7 @@
   opacity: 1;
   visibility: visible;
   z-index: 1000;
+  pointer-events: all;
 }
 
 .burger__wrapper {

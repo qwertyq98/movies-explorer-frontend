@@ -4,10 +4,7 @@ import Form from '../Form/Form';
 import TitleForm from '../TitleForm/TitleForm';
 import Logo from '../Logo/Logo';
 
-function Login({ user }) {
-  function handleSubmit(e) {
-    e.preventDefault();
-  } 
+function Login({serverError, onSubmit, loading}) {
 
   return (
     <main className='login'>
@@ -15,14 +12,15 @@ function Login({ user }) {
         <Logo />
         <TitleForm title='Рады видеть!' />
         <Form 
-          user={user} 
           type='login'
           name='login'
-          onSubmit={handleSubmit}
-          buttonName='Войти'
+          onSubmit={onSubmit}
+          buttonName={loading? 'Вход...' : 'Войти'}
           paragrafText='Ещё не зарегистрированы?'
           linkText='Регистрация'
           route='/signup'
+          serverError={serverError}
+          disabled={loading}
         />
       </section>
     </main>

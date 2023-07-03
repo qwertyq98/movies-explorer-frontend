@@ -1,0 +1,47 @@
+:root {
+  --toast-border-radius: 0.25rem;
+  --toast-theme-default: #fff;
+}
+
+.toast {
+  font-size: 0.875rem;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: var(--toast-border-radius);
+  box-shadow: 0 .125rem .25rem rgba(0, 0, 0, 0.075);
+  position: absolute;
+  overflow: hidden;
+  bottom: 30%;
+  right: 0;
+}
+
+.toast_default {
+  color: #2BE080;
+  background-color: var(--toast-theme-default);
+}
+
+.toast:not(:last-child) {
+  margin-bottom: 0.75rem;
+}
+
+.toast__body {
+  padding: 1rem;
+}
+
+@media screen and (max-width: 900px) {
+  .toast {
+    top: 10%;
+    bottom: auto;
+    right: 30px;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .toast {
+    top: auto;
+    bottom: 20%;
+    font-size: 12px;
+    line-height: 14.52px;
+    right: 14px;
+  }
+}

@@ -13,6 +13,7 @@
 .form__label {
   text-align: left;
   display: flex;
+  position: relative;
 }
 
 .form__label_profile {
@@ -26,14 +27,25 @@
   justify-content: space-between;
 }
 
+.form__edit {
+  color: #000000;
+  border: none;
+  background-color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 15.73px;
+  margin: 0 0 16px;
+  cursor: pointer;
+  transition: opacity .2s linear;
+}
+
+.form__edit:hover {
+  opacity: 0.7;
+}
 
 .form__label_profile:nth-child(2) {
   border-bottom: none;
   padding: 17px 0 0;
-}
-
-.form__label_profile:nth-child(3) {
-  display: none;
 }
 
 .form__label_login {
@@ -44,10 +56,6 @@
   margin: 0;
   flex-direction: column;
   color: #A0A0A0;
-}
-
-.form__label_login:nth-child(1) {
-  display: none;
 }
 
 .form__label_signup {
@@ -76,7 +84,16 @@
 .form__text_login {
   background-color: #F9F9F9;
   padding: 15px;
-  margin: 10px 0 20px;
+  margin: 10px 0 1px;
+  font-size: 13px;
+  line-height: 15.73px;
+  color: #000000;
+}
+
+.form__text_signup {
+  background-color: #F9F9F9;
+  padding: 15px;
+  margin: 10px 0 1px;
   font-size: 13px;
   line-height: 15.73px;
   color: #000000;
@@ -86,17 +103,45 @@
   color: #EE3465;
 }
 
-.form__text_signup {
-  background-color: #F9F9F9;
-  padding: 15px;
-  margin: 10px 0 20px;
-  font-size: 13px;
-  line-height: 15.73px;
-  color: #000000;
+.form__text_profile_red {
+  color: #EE3465;
 }
 
 .form__text_signup_red {
   color: #EE3465;
+}
+
+.form__error {
+  margin: 0 0 7px;
+  color: #EE3465;
+  font-size: 10px;
+  line-height: 12px;
+  font-weight: 400;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 396px;
+  height: 12px;
+}
+
+.form__server-error {
+  margin: 0 0 20px;
+  color: #EE3465;
+  font-size: 11px;
+  line-height: 13.31px;
+  font-weight: 400;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 396px;
+  height: 13.31px;
+  display: flex;
+  justify-content: center;
+}
+
+.form__error_profile {
+  position: absolute;
+  top: 34px
 }
 
 .form__button {
@@ -106,38 +151,28 @@
   border: none;
   cursor: pointer;
   transition: opacity .2s linear;
+  background-color: #2BE080;
+  height: 45px;
+  width: 396px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16.94px;
+  color: #FFFFFF;
+  border-radius: 3px;
 }
 
+.form__button_profile {
+  margin: 0;
+}
+ 
 .form__button:hover {
   opacity: 0.7;
 }
 
-.form__button_profile {
-  background-color: #FFFFFF;
-  font-size: 13px;
-  font-weight: 400;
-  line-height: 15.73px;
-  color: #000000;
-}
-
-.form__button_login {
-  background-color: #2BE080;
-  padding: 13px 177px 15px;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 16.94px;
-  color: #FFFFFF;
-  border-radius: 3px;
-}
-
-.form__button_signup {
-  background-color: #2BE080;
-  padding: 13px 125px 15px;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 16.94px;
-  color: #FFFFFF;
-  border-radius: 3px;
+.form__button_disable {
+  background-color: #F8F8F8;
+  pointer-events: none;
+  color: #C2C2C2;
 }
 
 .form__wrapper {
@@ -210,6 +245,10 @@
     min-height: 416px;
     height: 100%;
   }
+
+  .form__button_signup {
+    margin-top: 69px;
+  }
 }
 
 @media screen and (max-width: 540px) {
@@ -226,6 +265,15 @@
   .form__link_profile {
     font-size: 12px;
     line-height: 14.52px;
+  }
+
+  .form__edit {
+    font-size: 12px;
+    line-height: 14.52px;
+  }
+
+  .form__error {
+    max-width: 260px;
   }
 
   .form__name {
@@ -260,25 +308,17 @@
     justify-content: space-between;
   }
   
+  .form__server-error {
+    max-width: 260px;
+  }
   
   .form__label_profile:nth-child(2) {
     border-bottom: none;
     padding: 17px 0 0;
   }
   
-  .form__label_profile:nth-child(3) {
-    display: none;
-  }
-  
-  .form__button_login {
-    padding: 15px 112px 15px;
-    font-size: 12px;
-    line-height: 14.52px;
-    margin: 0 0 14px;
-  }
-
-  .form__button_signup {
-    padding: 15px 67px 15px;
+  .form__button {
+    width: 260px;
     font-size: 12px;
     line-height: 14.52px;
     margin: 0 0 14px;

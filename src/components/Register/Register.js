@@ -4,10 +4,7 @@ import Form from '../Form/Form';
 import TitleForm from '../TitleForm/TitleForm';
 import Logo from '../Logo/Logo';
 
-function Register({user}) {
-  function handleSubmit(e) {
-    e.preventDefault();
-  } 
+function Register({onSubmit, serverError, loading }) {
 
   return (
     <main className='signup'>
@@ -15,14 +12,15 @@ function Register({user}) {
         <Logo />
         <TitleForm title='Добро пожаловать!' />
         <Form 
-          user={user} 
           type='signup'
           name='signup'
-          onSubmit={handleSubmit}
-          buttonName='Зарегистрироваться'
+          onSubmit={onSubmit}
+          buttonName={loading? 'Регистрация...' : 'Зарегистрироваться'}
           paragrafText='Уже зарегистрированы?'
           linkText='Войти'
           route='/signin'
+          serverError={serverError}
+          disabled={loading}
         />
       </section>
     </main>
