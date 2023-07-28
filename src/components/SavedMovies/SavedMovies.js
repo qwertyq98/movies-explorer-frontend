@@ -14,6 +14,37 @@ function SavedMovies({ isLogin, handleBurger, burger }) {
   const [loading, setLoading] = React.useState(false);
   const [movies, setMovies] = React.useState([]);
   const [serverError, setServerError] = React.useState(false);
+  const [savedMovieIds, setSavedMovieIds] = React.useState(new Set());
+  const [allMovies, setAlldMovies] = React.useState([]);
+
+  useLayoutEffect(() => {
+    setLoading(true);
+    Promise.all([getMovies(), mainApi.getSavedMovies()])
+      .then(([movies, savedMovies]) => {
+        const savedMoviesIds = new Set();
+
+        savedMovies.forEach(movie => {
+          savedMoviesIds.add(movie.movieId);
+        });
+
+        setSavedMovieIds(savedMoviesIds);
+        setAlldMovies(movies);
+
+        const filteredMovies = filterMovies(movies, {
+          searchString: '',
+          shortFilms: false,
+          likedFilmIds: savedMoviesIds,
+        });
+
+        setMovies(filteredMovies);
+        setServerError(false);
+      })
+      .catch(() => {
+        setServerError(true);
+      })
+      .finally(() => setLoading(false));
+    
+  }, []);
 
   function handleCardLike(movie) {
     mainApi.deleteMovie(movie.id) 
@@ -25,36 +56,16 @@ function SavedMovies({ isLogin, handleBurger, burger }) {
         console.log(err);
       });
   }
-
-  useLayoutEffect(() => {
-    onChangeFilter({
-      searchString: '',
-      shortFilms: false,
-    });
-  }, []);
   
 
   function onChangeFilter({searchString, shortFilms}) {
-    setLoading(true);
-    Promise.all([
-      getMovies(),
-      mainApi.getSavedMovies()
-    ])
-      .then(([allMovies, savedMovies]) => {
-        const filteredMovies = filterMovies(allMovies, {
-          searchString: searchString,
-          shortFilms: shortFilms,
-          likedFilms: savedMovies,
-        });
+    const filteredMovies = filterMovies(allMovies, {
+      searchString: searchString,
+      shortFilms: shortFilms,
+      likedFilmIds: savedMovieIds,
+    });
 
-        setServerError(false);
-        setMovies(filteredMovies);
-      })
-      .catch((err) => {
-        console.error(err);
-        setServerError(true);
-      })
-      .finally(() => setLoading(false));
+    setMovies(filteredMovies);
   }
 
   return (

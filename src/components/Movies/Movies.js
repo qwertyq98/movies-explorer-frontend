@@ -18,9 +18,11 @@ function Movies({ isLogin, handleBurger, burger }) {
   const [initialQuantity, setInitialQuantity] = React.useState(0);
   const [additionalQuantity, setAdditionalQuantity] = React.useState(0);
   const [numberVisibleMovies, setNumberVisibleMovies] = React.useState(0);
+  const [savedMovies, setSavedMovies] = React.useState(new Set());
 
   function handleCardLike(movie) {
     if (movie.like) {
+      savedMovies.delete(movie.id);
       mainApi.deleteMovie(movie.id) 
         .then(() => {
           movie.like = false;
@@ -30,6 +32,7 @@ function Movies({ isLogin, handleBurger, burger }) {
           console.log(err);
         });
     } else {
+      savedMovies.add(movie.id);
       mainApi.addNewMovie(movie)
         .then(() => {
           movie.like = true;
@@ -39,6 +42,8 @@ function Movies({ isLogin, handleBurger, burger }) {
           console.log(err);
         });
     }
+
+    setSavedMovies(new Set([...savedMovies]));
   }
 
   function updateMoviesQuantity() {
@@ -59,23 +64,25 @@ function Movies({ isLogin, handleBurger, burger }) {
     const debounceDetermineParams = debounce(determineParams, 200);
     const searchMovies = JSON.parse(localStorage.getItem('searchMovies'));
 
-    if (searchMovies) {
-      mainApi.getSavedMovies()
-        .then((savedMovies) => {
-          const savedMoviesIds = new Set();
+    mainApi.getSavedMovies()
+      .then((savedMovies) => {
+        const savedMoviesIds = new Set();
+        savedMovies.forEach(movie => {
+          savedMoviesIds.add(movie.movieId);
+        });
+        setSavedMovies(savedMoviesIds);
 
-          savedMovies.forEach(movie => {
-            savedMoviesIds.add(movie.movieId);
-          });
+        if (searchMovies) {
           searchMovies.forEach(movie => {
-            movie.like = savedMoviesIds.has(movie.id); 
+            movie.like = savedMoviesIds.has(movie.id);
           });
           setMovies(searchMovies);
-        })
-        .catch(err => {
-          console.log(err);
-        })
-    }
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    
 
     determineParams();
     window.addEventListener('resize', debounceDetermineParams);
@@ -94,24 +101,16 @@ function Movies({ isLogin, handleBurger, burger }) {
     setLoading(true);
     setNumberVisibleMovies(initialQuantity);
 
-    Promise.all([
-      getMovies(),
-      mainApi.getSavedMovies()
-    ])
-      .then(([allMovies, savedMovies]) => {
+    getMovies()
+      .then((allMovies) => {
         const filteredMovies = filterMovies(allMovies, {
           searchString: searchString,
           shortFilms: shortFilms,
         });
-        const savedMoviesIds = new Set();
-      
-        savedMovies.forEach(movie => {
-          savedMoviesIds.add(movie.movieId);
-        });
+        
         filteredMovies.forEach(movie => {
-          movie.like = savedMoviesIds.has(movie.id); 
+          movie.like = savedMovies.has(movie.id);
         });
-
 
         setServerError(false);
         setMovies(filteredMovies);

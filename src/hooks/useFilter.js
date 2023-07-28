@@ -1,14 +1,8 @@
 import { SHORT_FILM_DURATION } from "../utils/constants";
-function filterMovies(movies, {searchString, shortFilms, likedFilms}) {
-  const savedMoviesIds = new Set();
-
-  likedFilms && likedFilms.forEach(movie => {
-    savedMoviesIds.add(movie.movieId);
-  });
-
+function filterMovies(movies, {searchString, shortFilms, likedFilmIds}) {
   return movies.filter(movie => {
     return (
-      (!likedFilms || savedMoviesIds.has(movie.id)) &&
+      (!likedFilmIds || likedFilmIds.has(movie.id)) &&
       (!shortFilms || movie.duration < SHORT_FILM_DURATION) &&
       (
         movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) || 
